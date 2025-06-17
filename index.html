@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StayNest - Your Ultimate Online Hotel Booking</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset and base styles */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #ece9e6, #ffffff);
+      color: #222;
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #eee;
+    }
+
+    /* Header styles */
+    header {
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s;
+    }
+
+    body.dark-mode header {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.8em;
+      color: #1E40AF;
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #2563EB;
+      font-weight: 600;
+      position: relative;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background 0.2s;
+    }
+
+    nav a:hover {
+      background-color: rgba(37, 99, 235, 0.1);
+    }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      background: none;
+      border: 2px solid #2563EB;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .theme-toggle:hover {
+      background-color: #2563EB;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    /* Hero section */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    }
+
+    .hero-content {
+      max-width: 600px;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    .hero button {
+      background-color: #fff;
+      color: #2563EB;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1em;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .hero button:hover {
+      background-color: #e0f2ff;
+      transform: translateY(-2px);
+    }
+
+    /* Hero image */
+    .hero img {
+      position: absolute;
+      right: 50px;
+      bottom: -20px;
+      max-width: 400px;
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    /* Sections styling */
+    section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* Heading styles */
+    h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2em;
+      position: relative;
+    }
+
+    h2::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 4px;
+      background-color: #2563EB;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* Card styles */
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .card {
+      background: #fff;
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 250px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    body.dark-mode .card {
+      background: #2c3e50;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    }
+
+    .card-icon {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      color: #1E40AF;
+    }
+
+    /* Booking section */
+    .booking-section {
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
+      border-radius: 20px;
+      padding: 40px 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin-top: 40px;
+    }
+
+    .booking-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      align-items: end;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      outline: none;
+      transition: box-shadow 0.2s;
+    }
+
+    input:focus, select:focus {
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+    }
+
+    .submit-button {
+      grid-column: 1 / -1;
+      background-color: #1E40AF;
+      color: #fff;
+      font-size: 1.1em;
+      padding: 15px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .submit-button:hover {
+      background-color: #2563EB;
+      transform: translateY(-2px);
+    }
+
+    /* Footer styles */
+    footer {
+      background-color: rgba(0, 0, 0, 0.05);
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 60px;
+    }
+
+    footer a {
+      text-decoration: none;
+      color: #2563EB;
+      margin: 0 10px;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: #1E40AF;
+    }
+
+    /* Responsive adjustments */
+    @media(max-width: 768px){
+      .hero {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 60px 20px;
+      }
+
+      .hero img {
+        position: static;
+        max-width: 300px;
+        margin-top: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      }
+
+      .header-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with theme toggle -->
+  <header role="banner">
+    <div class="logo" aria-label="StayNest logo" tabindex="0">StayNest</div>
+    <nav role="navigation" aria-label="Primary Navigation">
+      <a href="#features" tabindex="0">Why StayNest?</a>
+      <a href="#services" tabindex="0">Services</a>
+      <a href="#plans" tabindex="0">Plans</a>
+      <a href="#about" tabindex="0">About Us</a>
+      <a href="#booking" tabindex="0">Book Now</a>
+      <a href="#contact" tabindex="0">Contact</a>
+    </nav>
+    <button class="theme-toggle" aria-label="Toggle dark/light mode" id="theme-toggle">
+      🌙
+    </button>
+  </header>
+
+  <!-- Hero section -->
+  <section class="hero" role="region" aria-label="Main spotlight">
+    <div class="hero-content">
+      <h1>Experience Comfort. Book Your Stay at StayNest.</h1>
+      <p>Discover the best hotels, stunning locations, and exclusive deals all in one place.</p>
+      <button type="button" aria-label="Start your booking">Start Booking</button>
+    </div>
+    <img
+      src="https://placehold.co/400x300/2563eb/ffffff?text=Luxury+Hotel+Room"
+      alt="Luxury hotel room with modern design and comfortable bed"
+      loading="lazy"
+    />
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features" role="region" aria-label="Reasons to choose StayNest">
+    <h2>Why Choose StayNest?</h2>
+    <div class="cards-container">
+      <div class="card" tabindex="0" aria-describedby="feature1-desc">
+        <div class="card-icon">🏨</div>
+        <h3>Wide Hotel Selection</h3>
+        <p id="feature1-desc">Thousands of hotels worldwide to fit every taste and budget.</p>
+      </div>
+      <div class="card" tabindex="0" aria-describedby="feature2-desc">
+        <div class="card-icon">🔒</div>
+        <h3>Secure Payments</h3>
+        <p id="feature2-desc">Your data and transactions protected by top-tier security measures.</p>
+      </div>
+      <div class="card" tabindex="0" aria-describedby="feature3-desc">
+        <div class="card-icon">⚡</div>
+        <h3>Instant Booking</h3>
+        <p id="feature3-desc">Fast and easy booking confirmations so you can plan your trip without worries.</p>
+      </div>
+      <div class="card" tabindex="0" aria-describedby="feature4-desc">
+        <div class="card-icon">📞</div>
+        <h3>24/7 Support</h3>
+        <p id="feature4-desc">Dedicated customer support ready to assist you anytime, anywhere.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services" id="services" role="region" aria-label="Our Services">
+    <h2>Our Services</h2>
+    <div class="cards-container">
+      <div class="card" tabindex="0" aria-describedby="service1-desc">
+        <div class="card-icon">🛌</div>
+        <h3>Luxury Accommodations</h3>
+        <p id="service1-desc">Stay in the finest hotels with top-notch amenities.</p>
+      </div>
+      <div class="card" tabindex="0" aria-describedby="service2-desc">
+        <div class="card-icon">🍽️</div>
+        <h3>Gourmet Dining</h3>
+        <p id="service2-desc">Enjoy exquisite dining experiences at our partner restaurants.</p>
+      </div>
+      <div class="card" tabindex="0" aria-describedby="service3-desc">
+        <div class="card-icon">🏖️</div>
+        <h3>Exciting Activities</h3>
+        <p id="service3-desc">Explore local attractions and activities tailored to your interests.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section class="plans" id="plans" role="region" aria-label="Our Plans">
+    <h2>Our Plans</h2>
+    <div class="cards-container">
+      <div class="card" tabindex="0" aria-describedby="plan1-desc">
+        <div class="card-icon">💼</div>
+        <h3>Business Plan</h3>
+        <p id="plan1-desc">Ideal for business travelers with flexible booking options.</p>
+      </div>
+      <div class="card" tabindex="0" aria-describedby="plan2-desc">
+        <div class="card-icon">🏖️</div>
+        <h3>Vacation Plan</h3>
+        <p id="plan2-desc">Perfect for family vacations with special discounts.</p>
+      </div>
+      <div class="card" tabindex="0" aria-describedby="plan3-desc">
+        <div class="card-icon">🌍</div>
+        <h3>Adventure Plan</h3>
+        <p id="plan3-desc">For the adventurous spirit, explore unique destinations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us -->
+  <section class="about-us" id="about" role="region" aria-label="About Us">
+    <h2>About Us</h2>
+    <p style="max-width:800px; margin:auto; text-align:center;">
+      At StayNest, we are committed to providing you with the best hotel booking experience. Our platform offers a wide selection of hotels, secure payment options, and 24/7 customer support to ensure your stay is comfortable and enjoyable.
+    </p>
+  </section>
+
+  <!-- Booking Form -->
+  <section class="booking-section" id="booking" role="region" aria-label="Hotel booking form">
+    <h2 style="text-align:center;">Book Your Dream Hotel Stay</h2>
+    <form class="booking-form" aria-describedby="booking-desc">
+      <label for="destination">Destination</label>
+      <input type="text" id="destination" name="destination" placeholder="Enter city or hotel name" required />
+
+      <label for="checkin">Check-In Date</label>
+      <input type="date" id="checkin" name="checkin" required />
+
+      <label for="checkout">Check-Out Date</label>
+      <input type="date" id="checkout" name="checkout" required />
+
+      <label for="guests">Guests</label>
+      <select id="guests" name="guests" required>
+        <option value="1">1 Guest</option>
+        <option value="2" selected>2 Guests</option>
+        <option value="3">3 Guests</option>
+        <option value="4">4 Guests</option>
+        <option value="5">5+ Guests</option>
+      </select>
+
+      <button type="submit" class="submit-button" aria-label="Submit booking form">Search Hotels</button>
+    </form>
+  </section>
+  <section id="contact-us" style="padding:80px 20px; background: #f0f4f8;">
+  <h2 style="text-align:center;">Contact Us</h2>
+  <div style="max-width:600px; margin:auto; text-align:center;">
+    <p>Have questions? Reach out to our support team.</p>
+    <p>Email: support@staynest.com</p>
+    <p>Phone: +23 3452 2356</p>
+    <!-- Optional contact form -->
+    <form style="margin-top:20px;">
+      <input type="email" placeholder="Your Email" style="padding:10px; width:70%; border-radius:8px; border:1px solid #ccc;"/>
+      <br/><br/>
+      <textarea placeholder="Your Message" style="padding:10px; width:70%; height:100px; border-radius:8px; border:1px solid #ccc;"></textarea>
+      <br/><br/>
+      <button type="submit" style="padding:10px 20px; background:#2563EB; color:#fff; border:none; border-radius:8px;">Send Message</button>
+    </form>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer role="contentinfo" id="contact">
+    <p>© 2025 StayNest. All rights reserved.</p>
+    <p>
+      <a href="#features">Features</a> |
+      <a href="#services">Services</a> |
+      <a href="#plans">Plans</a> |
+      <a href="#about">About Us</a> |
+      <a href="#booking">Book Now</a> |
+      <a href="#contact">Contact</a>
+    </p>
+  </footer>
+
+  <!-- Scripts for theme toggle -->
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      // Change icon
+      toggleBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>
